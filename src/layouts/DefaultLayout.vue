@@ -38,7 +38,7 @@
           <a-menu-item key="8" @click="menuClick('machineLearning')">
             <span>Learning</span>
           </a-menu-item>
-          <a-menu-item key="9" @click="menuClick('machineLearning')">
+          <a-menu-item key="9" @click="menuClick('test')">
             <span>Status</span>
           </a-menu-item>
         </a-menu-item-group>
@@ -61,7 +61,7 @@
                 <a-menu>
                   <a-menu-item key="1">Profile</a-menu-item>
                   <a-menu-item key="2">Settings</a-menu-item>
-                  <a-menu-item key="3">Logout</a-menu-item>
+                  <a-menu-item key="3" @click="logout">Logout</a-menu-item>
                 </a-menu>
               </template>
             </a-dropdown>
@@ -83,6 +83,9 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { BarChartOutlined } from '@ant-design/icons-vue';
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
 
 const collapsed = ref(false);
 const selectedKeys = ref(['1']);
@@ -95,6 +98,11 @@ const menuClick = (menu) => {
 
 const handleMenuClick = () => {
   // Dropdown 메뉴 클릭 시 동작 설정 (필요시 추가)
+};
+
+const logout = () => {
+  authStore.logout(); // isAuthenticated를 false로 변경
+  router.push("/login"); // 로그인 페이지로 리디렉션
 };
 </script>
 

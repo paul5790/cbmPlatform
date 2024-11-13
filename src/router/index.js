@@ -5,6 +5,7 @@ import Login from "@/views/Login.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Analysis from "@/views/Analysis.vue";
 import MachineLearning from "@/views/MachineLearning.vue";
+import Test from "@/components/charts/CandlestickChart.vue";
 
 const routes = [
   {
@@ -29,6 +30,11 @@ const routes = [
       {
         path: "machineLearning",
         component: MachineLearning,
+        meta: { requiresAuth: true }, // 로그인 필요
+      },
+      {
+        path: "test",
+        component: Test,
         meta: { requiresAuth: true }, // 로그인 필요
       },
     ],

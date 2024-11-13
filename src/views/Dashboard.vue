@@ -3,15 +3,16 @@
     <!-- 첫 번째 줄: 운항시간 (20vh) -->
     <a-col :span="6">
       <a-card title="운항시간" class="small-card height-20" size="small">
-        Start: 2023.mm.dd hh:mm <br />
-        Elapse: 1D-17H:33M
+        <div class="card-content">
+          Start: 2023.mm.dd hh:mm <br />
+          Elapse: 1D-17H:33M
+        </div>
       </a-card>
     </a-col>
 
     <!-- 첫 번째 줄: 고장 발생 현황 (20vh) -->
     <a-col :span="18">
       <a-card title="고장 발생 현황" class="small-card height-20" size="small">
-        <!-- 그래프 또는 차트 위치 -->
       </a-card>
     </a-col>
   </a-row>
@@ -21,6 +22,8 @@
     <a-col :span="6">
       <a-card title="실시간 위치" class="small-card height-40" size="small">
         <!-- 지도 또는 위치 표시 -->
+        <!-- 그래프 또는 차트 위치 -->
+        <RealtimeMap :lat="parseFloat(36.1111)" :lon="parseFloat(129.5555)" />
       </a-card>
     </a-col>
 
@@ -28,6 +31,10 @@
     <a-col :span="6">
       <a-card title="엔진 RPM" class="small-card height-40" size="small">
         <!-- 엔진 RPM 차트 -->
+        <div class="gauge-container">
+          <SmallGauge />
+          <SmallGauge />
+        </div>
       </a-card>
     </a-col>
 
@@ -46,6 +53,7 @@
         size="small"
       >
         <!-- 고장 발생 빈도 차트 -->
+        <RadarChart />
       </a-card>
     </a-col>
   </a-row>
@@ -55,18 +63,7 @@
     <a-col :span="24">
       <a-card title="실시간 알람" class="small-card height-25" size="small">
         <!-- 알람 테이블 위치 -->
-        <a-table
-          :row-selection="rowSelection"
-          :pagination="{
-            pageSize: 1000,
-          }"
-          :scroll="{ y: 200 }"
-          :row-key="(record) => record.name"
-          bordered
-          :customRow="customRow"
-          size="small"
-        >
-        </a-table>
+        <AlarmTable/>
       </a-card>
     </a-col>
   </a-row>
@@ -74,6 +71,12 @@
 
 <script setup>
 // Ant Design Vue 컴포넌트를 사용하므로 별도의 스크립트 로직은 현재 필요 없습니다.
+import CandlestickChart from "../components/charts/CandlestickChart.vue";
+import RealtimeMap from "../components/map/RealtimeMap.vue";
+import SmallGauge from "../components/charts/SmallGauge.vue";
+import RadarChart from "../components/charts/RadarChart.vue";
+import AlarmTable from "../components/table/AlarmTable.vue";
+
 </script>
 
 <style scoped>
@@ -91,5 +94,21 @@
 
 .height-25 {
   height: 25vh;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em; /* 글씨 크기 조절 */
+  height: 100%;
+}
+
+.gauge-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 }
 </style>
